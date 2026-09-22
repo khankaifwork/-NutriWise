@@ -138,7 +138,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -154,7 +154,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     iconColor: const Color(0xFF64748B),
                   ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 8),
                 Expanded(
                   child: MetricCard(
                     title: 'Current',
@@ -166,23 +166,23 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     iconColor: AppTheme.primaryGreen,
                   ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 8),
                 Expanded(
                   child: MetricCard(
                     title: 'Target',
                     value: '${targetWeight.toStringAsFixed(1)} kg',
-                    subtitle: '${toTargetDiff.toStringAsFixed(1)} kg to go',
+                    subtitle: '${toTargetDiff.toStringAsFixed(1)} kg left',
                     icon: Icons.sports_score_rounded,
                     iconColor: AppTheme.accentTeal,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 18),
 
             // 2. Goal Completion % Card
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
                 color: isDark ? const Color(0xFF1E293B) : Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -227,13 +227,13 @@ class _ProgressScreenState extends State<ProgressScreen> {
                       color: AppTheme.primaryGreen,
                     ),
                   ),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 12),
 
                   // Dynamic Progress Summary Text
                   Text(
                     _getProgressSummary(profile.healthGoal, weightDiff, toTargetDiff),
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 12.5,
                       height: 1.45,
                       color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
                     ),
@@ -241,7 +241,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 22),
 
             // 3. Weight Chart Section with Weekly / Monthly Toggles
             Row(
@@ -249,7 +249,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
               children: [
                 const Text(
                   'Weight Trend',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
                 ),
                 Row(
                   children: [
@@ -262,10 +262,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 12),
 
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: isDark ? const Color(0xFF1E293B) : Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -278,7 +278,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 targetWeight: targetWeight,
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 22),
 
             // 4. Weight History Log
             Row(
@@ -286,7 +286,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
               children: [
                 const Text(
                   'Weight History Log',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
                 ),
                 TextButton.icon(
                   onPressed: _showAddWeightDialog,
@@ -295,7 +295,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
 
             if (allEntries.isEmpty)
               Center(
@@ -318,7 +318,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                   final entry = allEntries.reversed.toList()[index];
                   return Container(
                     margin: const EdgeInsets.only(bottom: 10),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                     decoration: BoxDecoration(
                       color: isDark ? const Color(0xFF1E293B) : Colors.white,
                       borderRadius: BorderRadius.circular(14),
@@ -329,46 +329,55 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: AppTheme.primaryGreen.withOpacity(0.12),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Icon(Icons.calendar_today_rounded,
-                                  size: 16, color: AppTheme.primaryGreen),
-                            ),
-                            const SizedBox(width: 12),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  DateFormat('EEEE, MMM d, y').format(entry.date),
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(7),
+                                decoration: BoxDecoration(
+                                  color: AppTheme.primaryGreen.withOpacity(0.12),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                if (entry.note != null && entry.note!.isNotEmpty)
-                                  Text(
-                                    entry.note!,
-                                    style: TextStyle(
-                                      fontSize: 11,
-                                      color: isDark
-                                          ? const Color(0xFF94A3B8)
-                                          : const Color(0xFF64748B),
+                                child: const Icon(Icons.calendar_today_rounded,
+                                    size: 15, color: AppTheme.primaryGreen),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      DateFormat('EEE, MMM d, y').format(entry.date),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                  ),
-                              ],
-                            ),
-                          ],
+                                    if (entry.note != null && entry.note!.isNotEmpty)
+                                      Text(
+                                        entry.note!,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          color: isDark
+                                              ? const Color(0xFF94A3B8)
+                                              : const Color(0xFF64748B),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+                        const SizedBox(width: 8),
                         Text(
                           '${entry.weightKg.toStringAsFixed(1)} kg',
                           style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 15,
                             fontWeight: FontWeight.w800,
                             color: AppTheme.primaryGreen,
                           ),

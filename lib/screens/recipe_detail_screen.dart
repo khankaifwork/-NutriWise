@@ -199,8 +199,9 @@ class RecipeDetailScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 12),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
                           children: [
                             MacroBadge(
                               label: 'Protein',

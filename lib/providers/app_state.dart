@@ -309,4 +309,243 @@ class AppState extends ChangeNotifier {
     await _storageService.saveDarkMode(_isDarkMode);
     notifyListeners();
   }
+
+  // --- Reset & Demo Actions ---
+
+  /// Clears all user data, returning to fresh baseline defaults
+  Future<void> resetAllData() async {
+    await _storageService.clearAllData(keepApiKey: true);
+
+    _profile = UserProfile.defaultProfile();
+    await _storageService.saveProfile(_profile);
+
+    _weightHistory = [
+      WeightEntry(
+        id: 'w_reset_${DateTime.now().millisecondsSinceEpoch}',
+        date: DateTime.now(),
+        weightKg: _profile.weightKg,
+        note: 'Starting baseline',
+      ),
+    ];
+    await _storageService.saveWeightHistory(_weightHistory);
+
+    _favoriteIds = {};
+    await _storageService.saveFavoriteRecipeIds(_favoriteIds);
+    _recipes = SampleRecipes.list.map((r) => r.copyWith(isFavorite: false)).toList();
+
+    _chatMessages = [
+      ChatMessage(
+        id: 'chat_welcome_reset',
+        sender: 'ai',
+        text: 'Hello ${_profile.name}! 👋 All data has been reset. How can I help you start your nutrition journey?',
+        timestamp: DateTime.now(),
+      ),
+    ];
+    await _storageService.saveChatHistory(_chatMessages);
+
+    // Regenerate fresh starter meal plan
+    _currentMealPlan = await _groqService.generateMealPlan(
+      profile: _profile,
+      apiKey: _groqApiKey,
+      isWeekly: false,
+    );
+    await _storageService.saveMealPlan(_currentMealPlan!);
+
+    notifyListeners();
+  }
+
+  /// Loads realistic, rich demonstration data so users can explore charts, meal plans, and features
+  Future<void> loadDemoData() async {
+    final now = DateTime.now();
+
+    // 1. Rich Demo Profile
+    _profile = const UserProfile(
+      name: 'Alex Morgan',
+      age: 27,
+      gender: 'Male',
+      heightCm: 178.0,
+      weightKg: 76.5,
+      targetWeightKg: 70.0,
+      targetWeeks: 10,
+      healthGoal: 'Weight Loss',
+      foodPreference: 'Non-Vegetarian',
+      allergies: ['Peanuts'],
+      activityLevel: 'Moderately Active',
+    );
+    await _storageService.saveProfile(_profile);
+
+    // 2. Realistic 30-Day Weight History with progress
+    _weightHistory = [
+      WeightEntry(
+        id: 'demo_w1',
+        date: now.subtract(const Duration(days: 28)),
+        weightKg: 80.5,
+        note: 'Starting fitness journey 🚀',
+      ),
+      WeightEntry(
+        id: 'demo_w2',
+        date: now.subtract(const Duration(days: 21)),
+        weightKg: 79.6,
+        note: 'Week 1: Cut late-night snacks',
+      ),
+      WeightEntry(
+        id: 'demo_w3',
+        date: now.subtract(const Duration(days: 14)),
+        weightKg: 78.4,
+        note: 'Week 2: Consistent 500 kcal deficit',
+      ),
+      WeightEntry(
+        id: 'demo_w4',
+        date: now.subtract(const Duration(days: 7)),
+        weightKg: 77.3,
+        note: 'Week 3: Increased daily protein to 150g',
+      ),
+      WeightEntry(
+        id: 'demo_w5',
+        date: now.subtract(const Duration(days: 2)),
+        weightKg: 76.8,
+        note: 'Post-workout weigh-in',
+      ),
+      WeightEntry(
+        id: 'demo_w6',
+        date: now,
+        weightKg: 76.5,
+        note: 'Current baseline: -4.0 kg down!',
+      ),
+    ];
+    await _storageService.saveWeightHistory(_weightHistory);
+
+    // 3. Demo Favorites
+    _favoriteIds = {'rec_1', 'rec_3'};
+    await _storageService.saveFavoriteRecipeIds(_favoriteIds);
+    _recipes = SampleRecipes.list.map((r) {
+      return r.copyWith(isFavorite: _favoriteIds.contains(r.id));
+    }).toList();
+
+    // 4. Demo Chat Dialogue
+    _chatMessages = [
+      ChatMessage(
+        id: 'demo_c1',
+        sender: 'ai',
+        text: 'Hello Alex! 👋 I am your NutriWise AI nutrition coach. I see your goal is **Weight Loss** with a target of **70 kg**.',
+        timestamp: now.subtract(const Duration(hours: 3)),
+      ),
+      ChatMessage(
+        id: 'demo_c2',
+        sender: 'user',
+        text: 'What is an optimal post-workout snack with at least 25g of protein?',
+        timestamp: now.subtract(const Duration(hours: 2)),
+      ),
+      ChatMessage(
+        id: 'demo_c3',
+        sender: 'ai',
+        text: 'Great question Alex! Here are two high-protein post-workout snacks tailored for you:\n\n'
+            '• **Greek Yogurt Power Bowl (~28g Protein, 260 kcal)**: 200g Greek yogurt topped with blueberries and 1 scoop whey protein or pumpkin seeds.\n'
+            '• **Seared Egg White & Turkey Wrap (~26g Protein, 240 kcal)**: 3 egg whites + 2 slices lean turkey breast wrapped in a light whole-wheat tortilla with baby spinach.\n\n'
+            'Both keep you in your **2,050 kcal** daily target while accelerating muscle recovery!',
+        timestamp: now.subtract(const Duration(hours: 2)),
+      ),
+    ];
+    await _storageService.saveChatHistory(_chatMessages);
+
+    // 5. Rich Multi-day Demo Meal Plan
+    _currentMealPlan = MealPlan(
+      id: 'demo_plan_1',
+      title: 'High-Protein Fat Loss Plan (Alex)',
+      healthGoal: 'Weight Loss',
+      dietPreference: 'Non-Vegetarian',
+      createdAt: now,
+      days: [
+        DailyMealPlan(
+          dayName: 'Monday',
+          breakfast: const MealItem(
+            title: 'Avocado & Poached Egg Protein Toast',
+            description: 'Whole grain sourdough topped with mashed avocado, 2 poached eggs, and crushed red pepper.',
+            calories: 380,
+            proteinG: 22,
+            carbsG: 32,
+            fatsG: 16,
+            prepTimeMin: 12,
+            ingredients: ['Sourdough bread', '2 free-range eggs', 'Half avocado', 'Chia seeds'],
+          ),
+          lunch: const MealItem(
+            title: 'Grilled Herb Chicken & Quinoa Bowl',
+            description: 'Tender chicken breast with fluffy tri-color quinoa, roasted cherry tomatoes, and cucumber slices.',
+            calories: 580,
+            proteinG: 48,
+            carbsG: 54,
+            fatsG: 14,
+            prepTimeMin: 20,
+            ingredients: ['Chicken breast (200g)', 'Quinoa (1 cup)', 'Cucumbers', 'Extra virgin olive oil'],
+          ),
+          snacks: const MealItem(
+            title: 'Greek Yogurt with Blueberries & Walnuts',
+            description: 'Creamy zero-fat Greek yogurt with fresh blueberries and raw walnut halves.',
+            calories: 210,
+            proteinG: 18,
+            carbsG: 18,
+            fatsG: 7,
+            prepTimeMin: 5,
+            ingredients: ['Greek yogurt (180g)', 'Blueberries (50g)', 'Walnuts (15g)'],
+          ),
+          dinner: const MealItem(
+            title: 'Pan-Seared Salmon with Steamed Asparagus',
+            description: 'Omega-3 rich salmon fillet with garlic asparagus spears and sweet potato mash.',
+            calories: 520,
+            proteinG: 44,
+            carbsG: 36,
+            fatsG: 18,
+            prepTimeMin: 25,
+            ingredients: ['Atlantic salmon (180g)', 'Asparagus bunch', 'Sweet potato', 'Lemon'],
+          ),
+        ),
+        DailyMealPlan(
+          dayName: 'Tuesday',
+          breakfast: const MealItem(
+            title: 'Berry Protein Oatmeal with Chia',
+            description: 'Warm rolled oats cooked with protein powder, cinnamon, and fresh raspberries.',
+            calories: 390,
+            proteinG: 28,
+            carbsG: 46,
+            fatsG: 8,
+            prepTimeMin: 10,
+            ingredients: ['Rolled oats', 'Whey protein', 'Almond milk', 'Raspberries'],
+          ),
+          lunch: const MealItem(
+            title: 'Seared Tuna Steak Mediterranean Salad',
+            description: 'Yellowfin tuna served over mixed greens, kalamata olives, and olive oil vinaigrette.',
+            calories: 540,
+            proteinG: 46,
+            carbsG: 24,
+            fatsG: 18,
+            prepTimeMin: 18,
+            ingredients: ['Tuna steak (180g)', 'Mixed greens', 'Kalamata olives', 'Balsamic vinegar'],
+          ),
+          snacks: const MealItem(
+            title: 'Crisp Apple & Cottage Cheese',
+            description: 'Fresh sliced Honeycrisp apple paired with low-fat cottage cheese and cinnamon.',
+            calories: 190,
+            proteinG: 14,
+            carbsG: 26,
+            fatsG: 3,
+            prepTimeMin: 3,
+            ingredients: ['1 Honeycrisp apple', 'Cottage cheese (120g)', 'Ground cinnamon'],
+          ),
+          dinner: const MealItem(
+            title: 'Lean Turkey & Zucchini Stir-Fry',
+            description: 'Ground turkey breast cooked with crisp zucchini coins and brown jasmine rice.',
+            calories: 510,
+            proteinG: 42,
+            carbsG: 45,
+            fatsG: 12,
+            prepTimeMin: 22,
+            ingredients: ['Lean turkey breast', 'Zucchini', 'Brown jasmine rice', 'Tamari soy sauce'],
+          ),
+        ),
+      ],
+    );
+    await _storageService.saveMealPlan(_currentMealPlan!);
+
+    notifyListeners();
+  }
 }

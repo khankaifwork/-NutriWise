@@ -31,7 +31,7 @@ class MetricCard extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(20),
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
           decoration: BoxDecoration(
             color: backgroundColor ?? (isDark ? const Color(0xFF1E293B) : Colors.white),
             borderRadius: BorderRadius.circular(20),
@@ -54,40 +54,51 @@ class MetricCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                  Expanded(
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w600,
+                        color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                      ),
                     ),
                   ),
+                  const SizedBox(width: 4),
                   Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
                       color: iconColor.withOpacity(0.12),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(icon, color: iconColor, size: 18),
+                    child: Icon(icon, color: iconColor, size: 16),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
-              Text(
-                value,
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w800,
-                  color: isDark ? Colors.white : const Color(0xFF0F172A),
-                  letterSpacing: -0.5,
+              const SizedBox(height: 6),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    color: isDark ? Colors.white : const Color(0xFF0F172A),
+                    letterSpacing: -0.5,
+                  ),
                 ),
               ),
               if (subtitle != null) ...[
-                const SizedBox(height: 4),
+                const SizedBox(height: 3),
                 Text(
                   subtitle!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 11.5,
                     fontWeight: FontWeight.w500,
                     color: iconColor,
                   ),

@@ -121,21 +121,21 @@ class RecipeCard extends StatelessWidget {
                       bottom: 10,
                       left: 12,
                       right: 12,
-                      child: Row(
+                      child: Wrap(
+                        spacing: 6,
+                        runSpacing: 4,
                         children: [
                           _buildOverlayPill(
                             icon: Icons.timer_outlined,
                             text: '${recipe.totalTimeMin} min',
                           ),
-                          const SizedBox(width: 8),
                           _buildOverlayPill(
                             icon: Icons.local_fire_department_rounded,
                             text: '${recipe.calories} kcal',
                           ),
-                          const SizedBox(width: 8),
                           _buildOverlayPill(
                             icon: Icons.fitness_center_rounded,
-                            text: '${recipe.proteinG}g Protein',
+                            text: '${recipe.proteinG}g P',
                           ),
                         ],
                       ),

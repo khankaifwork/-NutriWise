@@ -305,8 +305,8 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
                       final currentDay = plan.days[currentDayIndex];
 
                       return Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        padding: const EdgeInsets.all(16),
+                        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                         decoration: BoxDecoration(
                           color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
                           borderRadius: BorderRadius.circular(18),
@@ -320,13 +320,13 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
                                 Text(
                                   currentDay.dayName,
                                   style: const TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  '${currentDay.totalCalories} total kcal',
+                                  '${currentDay.totalCalories} kcal',
                                   style: const TextStyle(
                                     fontSize: 13,
                                     color: AppTheme.primaryGreen,
@@ -335,20 +335,19 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
                                 ),
                               ],
                             ),
-                            Row(
+                            Wrap(
+                              spacing: 5,
                               children: [
                                 MacroBadge(
                                   label: 'P',
                                   amount: '${currentDay.totalProtein}g',
                                   color: const Color(0xFF3B82F6),
                                 ),
-                                const SizedBox(width: 6),
                                 MacroBadge(
                                   label: 'C',
                                   amount: '${currentDay.totalCarbs}g',
                                   color: const Color(0xFFF59E0B),
                                 ),
-                                const SizedBox(width: 6),
                                 MacroBadge(
                                   label: 'F',
                                   amount: '${currentDay.totalFats}g',
@@ -370,7 +369,7 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
                           final currentDay = plan.days[currentDayIndex];
 
                           return ListView(
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             children: [
                               MealCard(
                                 mealType: 'Breakfast',

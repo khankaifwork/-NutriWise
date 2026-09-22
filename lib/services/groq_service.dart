@@ -44,7 +44,7 @@ class GroqService {
     final targetCalories = profile.dailyCalorieTarget;
     final macros = profile.dailyMacros;
 
-    final systemPrompt = '''
+    const systemPrompt = '''
 You are an expert nutritionist and meal planner. Generate a high quality, realistic meal plan for the user in strictly valid JSON format.
 Do NOT wrap the JSON in markdown code blocks like ```json ... ```. Output raw JSON only.
 Schema:

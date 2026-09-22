@@ -82,12 +82,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
   @override
   void dispose() {
-    _nameController.dispose;
-    _ageController.dispose;
-    _heightController.dispose;
-    _weightController.dispose;
-    _targetWeightController.dispose;
-    _targetWeeksController.dispose;
+    _nameController.dispose();
+    _ageController.dispose();
+    _heightController.dispose();
+    _weightController.dispose();
+    _targetWeightController.dispose();
+    _targetWeeksController.dispose();
     super.dispose();
   }
 
@@ -177,7 +177,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 const SizedBox(width: 14),
                 Expanded(
                   child: DropdownButtonFormField<String>(
-                    value: _selectedGender,
+                    initialValue: _selectedGender,
                     decoration: const InputDecoration(
                       labelText: 'Gender',
                       prefixIcon: Icon(Icons.wc_rounded),
@@ -352,7 +352,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             ),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
-              value: _selectedActivity,
+              initialValue: _selectedActivity,
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.directions_run_rounded),
               ),

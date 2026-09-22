@@ -106,38 +106,42 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    return InkWell(
-      onTap: () => setState(() => _currentIndex = index),
-      borderRadius: BorderRadius.circular(16),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? AppTheme.primaryGreen.withOpacity(0.12) : Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              isSelected ? activeIcon : inactiveIcon,
-              color: isSelected
-                  ? AppTheme.primaryGreen
-                  : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
-              size: 24,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+    return Expanded(
+      child: InkWell(
+        onTap: () => setState(() => _currentIndex = index),
+        borderRadius: BorderRadius.circular(16),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
+          decoration: BoxDecoration(
+            color: isSelected ? AppTheme.primaryGreen.withOpacity(0.12) : Colors.transparent,
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                isSelected ? activeIcon : inactiveIcon,
                 color: isSelected
                     ? AppTheme.primaryGreen
                     : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
+                size: 22,
               ),
-            ),
-          ],
+              const SizedBox(height: 3),
+              Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 10.5,
+                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                  color: isSelected
+                      ? AppTheme.primaryGreen
+                      : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

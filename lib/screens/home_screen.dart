@@ -87,51 +87,62 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 26,
-                              backgroundColor: Colors.white.withOpacity(0.2),
-                              child: Text(
-                                profile.name.isNotEmpty ? profile.name[0].toUpperCase() : 'U',
-                                style: const TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 14),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Hello, ${profile.name}! 👋',
+                        Expanded(
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 24,
+                                backgroundColor: Colors.white.withOpacity(0.2),
+                                child: Text(
+                                  profile.name.isNotEmpty ? profile.name[0].toUpperCase() : 'U',
                                   style: const TextStyle(
                                     fontSize: 20,
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
                                 ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  '${profile.age} yrs • ${profile.gender} • ${profile.activityLevel}',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.white.withOpacity(0.85),
-                                  ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Hello, ${profile.name}! 👋',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w800,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      '${profile.age} yrs • ${profile.gender} • ${profile.activityLevel}',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 11.5,
+                                        color: Colors.white.withOpacity(0.85),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ],
+                              ),
+                            ],
+                          ),
                         ),
+                        const SizedBox(width: 8),
                         // Edit Profile Button
                         IconButton.filledTonal(
                           style: IconButton.styleFrom(
                             backgroundColor: Colors.white.withOpacity(0.2),
+                            padding: const EdgeInsets.all(8),
                           ),
-                          icon: const Icon(Icons.edit_rounded, color: Colors.white, size: 20),
+                          icon: const Icon(Icons.edit_rounded, color: Colors.white, size: 18),
                           tooltip: 'Edit Profile',
                           onPressed: () {
                             Navigator.of(context).push(
@@ -141,18 +152,19 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 18),
-                    const Divider(color: Colors.white24, height: 1),
                     const SizedBox(height: 14),
+                    const Divider(color: Colors.white24, height: 1),
+                    const SizedBox(height: 12),
 
-                    // Goal & Diet Badges
-                    Row(
+                    // Goal & Diet Badges (Wrap safely on small screens)
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 6,
                       children: [
                         _buildHeroTag(
                           icon: Icons.flag_rounded,
                           label: profile.healthGoal,
                         ),
-                        const SizedBox(width: 8),
                         _buildHeroTag(
                           icon: Icons.restaurant_rounded,
                           label: profile.foodPreference,
@@ -162,7 +174,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
 
               // 2. Physical Metrics Grid
               Row(
@@ -331,8 +343,9 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
                       children: [
                         MacroBadge(
                           label: 'Protein',

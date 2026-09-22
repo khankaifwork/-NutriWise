@@ -123,4 +123,26 @@ class StorageService {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool(_keyDarkMode) ?? false;
   }
+
+  // --- Reset & Clear ---
+  Future<void> clearAllData({bool keepApiKey = true}) async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedKey = prefs.getString(_keyGroqApiKey);
+    final savedDark = prefs.getBool(_keyDarkMode);
+
+    await prefs.remove(_keyProfile);
+    await prefs.remove(_keyMealPlan);
+    await prefs.remove(_keyFavorites);
+    await prefs.remove(_keyWeightHistory);
+    await prefs.remove(_keyChatHistory);
+
+    if (!keepApiKey) {
+      await prefs.remove(_keyGroqApiKey);
+    } else if (savedKey != null) {
+      await prefs.setString(_keyGroqApiKey, savedKey);
+    }
+    if (savedDark != null) {
+      await prefs.setBool(_keyDarkMode, savedDark);
+    }
+  }
 }

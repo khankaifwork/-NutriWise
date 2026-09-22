@@ -138,7 +138,199 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const SizedBox(height: 28),
 
-          // Section 2: Appearance
+          const SizedBox(height: 24),
+
+          // Section 2: Data & Demo Management
+          _buildSectionHeader('Data & Demo Management'),
+          const SizedBox(height: 8),
+          Text(
+            'Explore realistic sample metrics or wipe all stored entries to start fresh.',
+            style: TextStyle(
+              fontSize: 13,
+              color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+            ),
+          ),
+          const SizedBox(height: 14),
+
+          // Demo Data Card
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF1E293B) : Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: AppTheme.accentTeal.withOpacity(0.12),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Icon(Icons.auto_awesome_rounded, color: AppTheme.accentTeal, size: 20),
+                    ),
+                    const SizedBox(width: 12),
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Load Demo Experience',
+                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                          ),
+                          SizedBox(height: 2),
+                          Text(
+                            'Fills charts, meal plans, & chat with realistic 30-day tracking data.',
+                            style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppTheme.accentTeal,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    onPressed: () async {
+                      await context.read<AppState>().loadDemoData();
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('🎉 Demo data loaded! Check Home, Meal Plan, & Progress tabs.'),
+                            backgroundColor: AppTheme.accentTeal,
+                          ),
+                        );
+                      }
+                    },
+                    icon: const Icon(Icons.play_circle_outline_rounded, size: 18),
+                    label: const Text('Load Demo Data'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          // Reset Data Card
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF1E293B) : Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: AppTheme.accentRose.withOpacity(0.3),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: AppTheme.accentRose.withOpacity(0.12),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Icon(Icons.restart_alt_rounded, color: AppTheme.accentRose, size: 20),
+                    ),
+                    const SizedBox(width: 12),
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Reset All Data',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                              color: AppTheme.accentRose,
+                            ),
+                          ),
+                          SizedBox(height: 2),
+                          Text(
+                            'Wipes logged weights, custom plans, & chat history back to clean state.',
+                            style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppTheme.accentRose,
+                      side: const BorderSide(color: AppTheme.accentRose),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: const Row(
+                            children: [
+                              Icon(Icons.warning_amber_rounded, color: AppTheme.accentRose),
+                              SizedBox(width: 8),
+                              Text('Reset All Data?'),
+                            ],
+                          ),
+                          content: const Text(
+                            'This action will permanently reset your profile measurements, logged weight history, custom meal plans, and chat logs back to initial defaults.\n\n(Your Groq API key will be kept safe).',
+                            style: TextStyle(fontSize: 13, height: 1.4),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(ctx),
+                              child: const Text('Cancel'),
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppTheme.accentRose,
+                                foregroundColor: Colors.white,
+                              ),
+                              onPressed: () async {
+                                Navigator.pop(ctx);
+                                await context.read<AppState>().resetAllData();
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('All data has been reset to defaults.'),
+                                      backgroundColor: AppTheme.accentRose,
+                                    ),
+                                  );
+                                }
+                              },
+                              child: const Text('Reset Everything'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.delete_forever_rounded, size: 18),
+                    label: const Text('Reset All Data'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+
+          // Section 3: Appearance
           _buildSectionHeader('Appearance'),
           const SizedBox(height: 10),
 
@@ -158,7 +350,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             trailing: Switch(
               value: appState.isDarkMode,
-              activeColor: AppTheme.primaryGreen,
+              activeThumbColor: AppTheme.primaryGreen,
               onChanged: (_) => context.read<AppState>().toggleDarkMode(),
             ),
           ),
