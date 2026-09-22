@@ -1,0 +1,188 @@
+import '../models/recipe.dart';
+
+class SampleRecipes {
+  static List<Recipe> get list => [
+        const Recipe(
+          id: 'rec_1',
+          title: 'Creamy Avocado & Spinach Protein Bowl',
+          category: 'High Protein',
+          description: 'A vibrant, nutrient-dense breakfast bowl packed with healthy fats, iron, and slow-burning energy.',
+          prepTimeMin: 10,
+          cookTimeMin: 5,
+          calories: 380,
+          proteinG: 22,
+          carbsG: 34,
+          fatsG: 18,
+          ingredients: [
+            '1 ripe Hass Avocado',
+            '2 cups Baby Spinach',
+            '1 scoop Plant or Whey Protein (unflavored/vanilla)',
+            '1 cup Unsweetened Almond Milk',
+            '1 tbsp Chia Seeds',
+            '1/4 cup Blueberries for topping'
+          ],
+          instructions: [
+            'Rinse the spinach thoroughly and add to the blender.',
+            'Scoop the avocado flesh into the blender and add almond milk.',
+            'Add protein powder and chia seeds.',
+            'Blend on high until silky smooth.',
+            'Pour into a bowl and garnish with fresh blueberries and hemp hearts.'
+          ],
+          youtubeUrl: 'https://www.youtube.com/results?search_query=green+protein+smoothie+bowl',
+          imageUrl: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&q=80',
+        ),
+        const Recipe(
+          id: 'rec_2',
+          title: 'Lemon Herb Grilled Chicken with Asparagus',
+          category: 'High Protein',
+          description: 'Zesty marinated chicken breast charred to perfection with crisp garlic asparagus.',
+          prepTimeMin: 15,
+          cookTimeMin: 15,
+          calories: 420,
+          proteinG: 48,
+          carbsG: 12,
+          fatsG: 14,
+          ingredients: [
+            '200g Chicken Breast fillets',
+            '1 bunch Fresh Asparagus, trimmed',
+            '1 Lemon (juiced & zested)',
+            '2 cloves Garlic, minced',
+            '1 tbsp Extra Virgin Olive Oil',
+            '1 tsp Dried Oregano',
+            'Salt and freshly cracked black pepper'
+          ],
+          instructions: [
+            'In a shallow bowl, whisk olive oil, lemon juice, lemon zest, garlic, oregano, salt, and pepper.',
+            'Coat chicken breasts evenly and let marinate for at least 15 minutes.',
+            'Heat a grill pan or cast iron skillet over medium-high heat.',
+            'Grill chicken for 5-6 minutes per side until internal temperature reaches 74°C (165°F).',
+            'In the same pan, toss asparagus with residual juices for 3-4 minutes until tender-crisp.',
+            'Plate chicken sliced with asparagus and lemon wedges.'
+          ],
+          youtubeUrl: 'https://www.youtube.com/results?search_query=lemon+herb+grilled+chicken+breast',
+          imageUrl: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=600&q=80',
+        ),
+        const Recipe(
+          id: 'rec_3',
+          title: 'Mediterranean Chickpea & Feta Salad',
+          category: 'Vegetarian',
+          description: 'Crisp English cucumbers, vine tomatoes, kalamata olives, and creamy feta tossed with spiced chickpeas.',
+          prepTimeMin: 12,
+          cookTimeMin: 0,
+          calories: 340,
+          proteinG: 14,
+          carbsG: 42,
+          fatsG: 13,
+          ingredients: [
+            '1 can (400g) Chickpeas, rinsed & drained',
+            '1 English Cucumber, diced',
+            '1 cup Cherry Tomatoes, halved',
+            '50g Crumbled Feta cheese',
+            '1/4 cup Kalamata Olives, pitted',
+            '2 tbsp Extra Virgin Olive Oil',
+            '1 tbsp Red Wine Vinegar',
+            'Fresh Parsley, chopped'
+          ],
+          instructions: [
+            'In a large salad bowl, combine the drained chickpeas, diced cucumber, and halved cherry tomatoes.',
+            'Gently fold in olives and crumbled feta.',
+            'In a small ramekin, whisk together olive oil, red wine vinegar, salt, and black pepper.',
+            'Drizzle the dressing over the salad and toss gently to combine.',
+            'Top with generous fresh parsley and serve chilled.'
+          ],
+          youtubeUrl: 'https://www.youtube.com/results?search_query=mediterranean+chickpea+salad',
+          imageUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80',
+        ),
+        const Recipe(
+          id: 'rec_4',
+          title: 'Overnight Chia & Oats with Warm Berries',
+          category: 'Quick & Easy',
+          description: 'A prepped-ahead miracle breakfast with gut-loving prebiotic oats and omega-rich chia.',
+          prepTimeMin: 5,
+          cookTimeMin: 0,
+          calories: 310,
+          proteinG: 12,
+          carbsG: 50,
+          fatsG: 7,
+          ingredients: [
+            '1/2 cup Rolled Oats',
+            '1 tbsp Chia Seeds',
+            '3/4 cup Oat or Almond Milk',
+            '1 tsp Pure Maple Syrup',
+            '1/2 cup Mixed Frozen Berries',
+            '1 pinch Ground Cinnamon'
+          ],
+          instructions: [
+            'Combine oats, chia seeds, cinnamon, and maple syrup in a glass jar or airtight container.',
+            'Pour in plant milk and stir thoroughly until well blended.',
+            'Seal with lid and refrigerate overnight (or at least 4 hours).',
+            'In the morning, warm berries in the microwave for 30 seconds until saucy.',
+            'Spoon warm berries over oats and enjoy!'
+          ],
+          youtubeUrl: 'https://www.youtube.com/results?search_query=overnight+oats+recipe',
+          imageUrl: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=600&q=80',
+        ),
+        const Recipe(
+          id: 'rec_5',
+          title: 'Pan-Seared Crispy Skin Salmon with Broccoli',
+          category: 'Low Carb',
+          description: 'Rich in anti-inflammatory Omega-3 fatty acids, paired with steamed lemon broccoli.',
+          prepTimeMin: 10,
+          cookTimeMin: 12,
+          calories: 460,
+          proteinG: 40,
+          carbsG: 8,
+          fatsG: 28,
+          ingredients: [
+            '1 Salmon Fillet (skin-on, ~180g)',
+            '2 cups Fresh Broccoli florets',
+            '1 tbsp Ghee or Olive Oil',
+            '1 clove Garlic, crushed',
+            '1/2 Lemon',
+            'Flaky sea salt'
+          ],
+          instructions: [
+            'Pat salmon skin completely dry with paper towels. Season both sides with salt and pepper.',
+            'Heat olive oil in a non-stick pan over medium-high heat until shimmering.',
+            'Place salmon skin-side down and press gently with spatula for 10 seconds.',
+            'Sear for 5 minutes until skin is crispy, then flip and cook for 2-3 minutes more.',
+            'Steam broccoli florets for 4 minutes, then toss with garlic, lemon juice, and sea salt.',
+            'Serve crispy salmon alongside the garlic broccoli.'
+          ],
+          youtubeUrl: 'https://www.youtube.com/results?search_query=how+to+cook+crispy+skin+salmon',
+          imageUrl: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&q=80',
+        ),
+        const Recipe(
+          id: 'rec_6',
+          title: 'Golden Turmeric Lentil Dal',
+          category: 'Vegetarian',
+          description: 'A deeply comforting and anti-inflammatory red lentil stew with fragrant ginger and cumin.',
+          prepTimeMin: 10,
+          cookTimeMin: 20,
+          calories: 320,
+          proteinG: 18,
+          carbsG: 48,
+          fatsG: 6,
+          ingredients: [
+            '1 cup Red Lentils (Masoor dal), rinsed',
+            '1 Onion, finely diced',
+            '2 cloves Garlic & 1-inch Ginger, minced',
+            '1 tsp Ground Turmeric & 1 tsp Cumin powder',
+            '1/2 tsp Garam Masala',
+            '3 cups Vegetable Broth or water',
+            '1 cup Fresh Spinach leaves',
+            '1 tbsp Coconut Oil'
+          ],
+          instructions: [
+            'Heat coconut oil in a pot. Sauté diced onions until translucent.',
+            'Add garlic, ginger, turmeric, and cumin, stirring for 1 minute until fragrant.',
+            'Add rinsed lentils and pour in vegetable broth.',
+            'Bring to a boil, then reduce heat and simmer uncovered for 15 minutes until creamy.',
+            'Stir in garam masala and spinach until leaves wilt.',
+            'Ladle into bowls and garnish with fresh cilantro.'
+          ],
+          youtubeUrl: 'https://www.youtube.com/results?search_query=easy+red+lentil+dal+recipe',
+          imageUrl: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&q=80',
+        ),
+      ];
+}
